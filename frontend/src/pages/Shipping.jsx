@@ -1,7 +1,7 @@
 // ShippingPage.jsx
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import axios from 'axios'
 
@@ -10,6 +10,19 @@ import Footer from '../components/Footer'
 
 const ShippingPage = () => {
     const cart = useSelector((state) => state.cart)
+    const navigate = useNavigate()
+
+    const [orderInfo, setOrderInfo] = useState({
+        username: "test5",
+        email: "ndkhoi.gdsciu@gmail.com",
+        phoneNumber: "0123 456 789",
+        address: ""
+    })
+
+    const handleChange = (e) => {
+        setOrderInfo(prev => ({...prev, [e.target.name]: e.target.value}))
+    }
+    console.log(orderInfo)
 
     const handlePayment = async (e) => {
         e.preventDefault()
@@ -28,17 +41,38 @@ const ShippingPage = () => {
         }
     }
 
+    const handleSendEmail = async (e) => {
+        e.preventDefault()
+
+        try {
+            const response = await axios.post("http://localhost:8800/success", orderInfo);
+            console.log(response, 'res');
+
+            if (response.data.status == "Successful") {
+                navigate("/successful")
+            }
+        } catch (error) {
+            console.error('Error when sending email:', error);
+            alert("Error!");
+        }
+    }
+
+    const subt = (items, propP, propQ) => {
+        return items.reduce((acc, value) => acc + value[propP] * value[propQ], 0);
+    }
+
     const orderSummary = {
-        subtotal: 191.65,
-        shipping: 10.0,
-        total: 201.65,
+        subtotal: subt(cart.items, 'price', 'quantity'),
+        shipping: 1.0,
     };
+
+    const total = Object.values(orderSummary).reduce((acc, value) => acc + value, 0);
 
     return (
         <>
             <Navbar isMenu={false} isContact={false} isAbout={false} />
             <div className="bg-white font-poppins">
-                <div className="mx-auto max-w-2xl px-4 py-20 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+                <div className="mx-auto max-w-2xl min-h-screen px-4 py-20 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                     <div className="mb-5">
                         <Link to="/checkout" className="hover:text-primary-bg transition-colors"><span>&larr;</span> Back to Cart</Link>
                     </div>
@@ -63,7 +97,7 @@ const ShippingPage = () => {
                                 </div>
 
                                 <h2 className="text-xl font-bold">Your Address</h2>
-                                <input type="text" placeholder="e.g, Dĩ An, Bình Dương" className="my-3 px-3 py-1 w-full"/>
+                                <input type="text" name="address" placeholder="e.g, Dĩ An, Bình Dương" onChange={handleChange} className="my-3 px-3 py-1 w-full"/>
                             </div>
 
                             <div className="rounded-xl shadow-lg px-5 py-3">
@@ -74,7 +108,7 @@ const ShippingPage = () => {
 
                                         {/* Details */}
                                         <div>
-                                            <h2 className="text-lg">{item.name}</h2>
+                                            <h2 className="text-lg">{item.name} <span className="ml-2.5 px-2.5 rounded-full bg-primary-bg text-white">{item.quantity}</span></h2>
                                             <p className="font-bold text-lg">${item.price}</p>
                                         </div>
                                     </div>
@@ -87,14 +121,14 @@ const ShippingPage = () => {
                             <h2 className="text-xl font-bold">Order Summary</h2>
 
                             <div className="my-5">
-                                <p>Subtotal: ${orderSummary.subtotal.toFixed(2)}</p>
-                                <p>Shipping: ${orderSummary.shipping.toFixed(2)}</p>
-                                <p className="text-lg font-bold mt-1">Total: ${orderSummary.total.toFixed(2)}</p>
+                                <p>Subtotal: <span className="float-right">${orderSummary.subtotal.toFixed(2)}</span></p>
+                                <p>Shipping: <span className="float-right">${orderSummary.shipping.toFixed(2)}</span></p>
+                                <p className="text-lg font-bold mt-1">Total: <span className="float-right">${total.toFixed(2)}</span></p>
                             </div>
 
                             <div className="flex items-center justify-center gap-x-3">
-                                <button className="px-3 py-1 border-solid border-2 border-pink-500 hover:bg-pink-500 hover:text-white transition-colors rounded-xl" onClick={handlePayment}>Pay with MOMO</button>
-                                <button className="px-3 py-1 border-solid border-2 border-primary-bg hover:bg-primary-bg hover:text-white transition-colors rounded-xl"><a href="/successful">Pay Order</a></button>
+                                <button className="flex items-center gap-x-3 px-3 py-1 border-solid border-2 border-pink-500 hover:bg-pink-500 hover:text-white transition-colors rounded-xl" onClick={handlePayment}><img src="./assets/momo.png" alt="MOMO" className="w-8 block m-auto" />Pay with MOMO</button>
+                                <button className="flex items-center gap-x-3 px-3 py-1 border-solid border-2 border-primary-bg hover:bg-primary-bg hover:text-white transition-colors rounded-xl" onClick={handleSendEmail}><img src="./assets/wallet.svg" alt="Wallet" className="w-8 block m-auto" />Pay Order</button>
                             </div>
                         </div>
                     </div>
