@@ -14,7 +14,7 @@ const Navbar = (props) => {
     const navigation = [
         { name: 'Menu', href: '/products', current: props.isMenu },
         { name: 'Contact', href: '/contact', current: props.isContact },
-        { name: 'About Us', href: '#', current: props.isAbout }
+        { name: 'About Us', href: '/about', current: props.isAbout }
     ]
 
     const [totalQuantity, setTotalQuantity] = useState(0)

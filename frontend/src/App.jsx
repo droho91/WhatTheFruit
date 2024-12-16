@@ -17,6 +17,7 @@ import AdminUpdate from "./pages/AdminUpdate"
 
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'; // Import default CSS for toastify
+import AboutUs from "./pages/AboutUs"
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/admin-products" element={<AdminProducts />} />
         <Route path="/admin-update/:id" element={<AdminUpdate />} />
+        <Route path="/about" element={<AboutUs />} />
       </Routes>
       <ToastContainer 
           position="top-center" 
