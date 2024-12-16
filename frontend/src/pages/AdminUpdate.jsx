@@ -46,11 +46,11 @@ const AdminUpdate = () => {
                     <div className="flex justify-between gap-x-3">
                         <div>
                             <h2>Name</h2>
-                            <input type="text" name="name" placeholder="e.g. Peach Tea" onChange={handleChange} className="px-3" />
+                            <input type="text" name="name" placeholder="e.g. Peach" onChange={handleChange} className="px-3" />
                         </div>
                         <div>
                             <h2>Description</h2>
-                            <input type="text" name="desc" placeholder="e.g. A tea." onChange={handleChange} className="px-3" />
+                            <input type="text" name="desc" placeholder="e.g. A fruit." onChange={handleChange} className="px-3" />
                         </div>
                         <div>
                             <h2>Price</h2>
@@ -58,7 +58,7 @@ const AdminUpdate = () => {
                         </div>
                         <div>
                             <h2>Image Link</h2>
-                            <input type="text" name="image" placeholder="e.g. peachTea.jpg" onChange={handleChange} className="px-3" />
+                            <input type="text" name="image" placeholder="e.g. peach.jpg" onChange={handleChange} className="px-3" />
                         </div>
 
                         <div>

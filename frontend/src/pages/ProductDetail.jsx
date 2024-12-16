@@ -116,7 +116,7 @@ const ProductDetail = () => {
     const [activeTab, setActiveTab] = useState('Description')
     const [reviews, setReviews] = useState([])
     const [inputReview, setInputReview] = useState({
-        userId: 2,
+        userId: 3,
         productId: info.id,
         reviewContent: "",
         reviewDate: curDate
@@ -159,20 +159,6 @@ const ProductDetail = () => {
             quantity: quantity
         }))
     }
-
-    {/* Fetch all categories */}
-    useEffect(() => {
-        const fetchAllCategories = async () => {
-        try {
-            const res = await axios.get("http://localhost:8800/category");
-            setCategories(res.data);
-        } catch (err) {
-            console.log(err);
-        }
-        };
-
-        fetchAllCategories();
-    }, []);
     
     {/* Fetch all products */}
     useEffect(() => {

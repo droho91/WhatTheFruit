@@ -69,7 +69,7 @@ const Home = () => {
                   src="./assets/mangosteen.png"
                   className="h-8 w-auto"
               />
-              <p className="text-xl font-bold text-purple-700">FRUIT HOUSE</p>
+              <p className="text-xl font-bold text-purple-700">FruitHouse</p>
             </a>
           </div>
 
