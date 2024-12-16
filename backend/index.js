@@ -25,7 +25,7 @@ const db = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "Koiespretion2004!",
-    database: "dsm"
+    database: "fsm"
 })
 
 // CRUD Operations
