@@ -7,6 +7,8 @@ import cookieParser from 'cookie-parser'
 
 import axios from 'axios'
 
+import nodemailer from 'nodemailer'
+
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url)
 
@@ -27,6 +29,27 @@ const db = mysql.createConnection({
     password: "Koiespretion2004!",
     database: "fsm"
 })
+
+const sendMail = async ({email, subject, html}) => {
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        service: 'Gmail',
+        auth: {
+            user: "nguyenkhoi200455@gmail.com",
+            pass: "obtb crvl ldug qbwe"
+        }
+    })
+
+    const message = {
+        from: '61House',
+        to: email,
+        subject: subject,
+        html: html
+    }
+
+    const result = await transporter.sendMail(message);
+    return result;
+}
 
 // CRUD Operations
 // POST (Create) A USER (Sign In)
@@ -78,7 +101,7 @@ app.post("/login", (req, res) => {
 const verifyUser = (req, res, next) => {
     const token = req.cookies.token
     if (!token) {
-        return res.json(`Error Message: ${err}`)
+        console.log("You are not authenticated!");
     } else {
         jwt.verify(token, 'jwt-secret-key', (err, decoded) => {
             if (err) {
@@ -202,6 +225,44 @@ app.delete("/product/:id", (req, res) => {
     const q = "DELETE FROM product WHERE id = ?";
   
     db.query(q, [productId], (err, data) => {
+        if (err) return res.send(err);
+        return res.json(data);
+    });
+});
+
+// POST (Create) A REVIEW
+app.post("/review", (req, res) => {
+    const q = "INSERT INTO review (`userId`, `productId`, `reviewContent`, `reviewDate`) VALUES (?)";
+
+    const values = [
+        req.body.userId,
+        req.body.productId,
+        req.body.reviewContent,
+        req.body.reviewDate
+    ];
+
+    db.query(q, [values], (err, data) => {
+        if (err) return res.send(err);
+        return res.json(data);
+    });
+});
+
+// GET (Read) ALL REVIEWS
+app.get("/review", (req, res) => {
+    const q = "SELECT review.*, user.id, user.username FROM review INNER JOIN user ON review.userId = user.id"
+    db.query(q, (err, data) => {
+        if (err) return res.json(`Error Message: ${err}`)
+        return res.json(data)
+    })
+})
+
+
+// DEL (Delete) A REVIEW
+app.delete("/review/:id", (req, res) => {
+    const reviewId = req.params.id;
+    const q = "DELETE FROM review WHERE id = ?";
+  
+    db.query(q, [reviewId], (err, data) => {
         if (err) return res.send(err);
         return res.json(data);
     });
@@ -357,6 +418,27 @@ app.post("/transaction-status", async (req, res) => {
 
     let result = await axios(options);
     return res.status(200).json(result.data)
+})
+
+// SEND EMAIL
+app.post("/success", async (req, res) => {
+    await sendMail({
+        email: req.body.email,
+        subject: "Your order has been sent!",
+        html: `
+            <h1>Order Sent Successfully!</h1>
+            <p>Your order has been sent successfully! Here is your order information:</p>
+            <ul>
+                <li>Username: ${req.body.username}</li>
+                <li>Email: ${req.body.email}</li>
+                <li>Phone Number: ${req.body.phoneNumber}</li>
+                <li>Address: ${req.body.address}</li>
+            </ul>
+            <p>Please wait until your phone receives a call from the delivery person that tells you to receive your drink!</p>
+        `
+    })
+
+    return res.status(200).json({status: "Successful"});
 })
 
 app.listen(8800, () => {

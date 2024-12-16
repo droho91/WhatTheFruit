@@ -1,12 +1,14 @@
 // ProductDetail.jsx
-import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 import { useDispatch } from 'react-redux'
 import { addToCart } from '../stores/cartSlice'
+
+import axios from 'axios'
 
 const styles = {
     productImage: {
@@ -59,7 +61,7 @@ const styles = {
         color: '#333',
     },
     addToCartButton: {
-        backgroundColor: '#6b21a8',
+        backgroundColor: '#a855f7',
         color: '#fff',
         padding: '0.75rem 1.5rem',
         borderRadius: '8px',
@@ -82,7 +84,7 @@ const styles = {
         fontSize: '1rem',
     },
     activeTab: {
-        borderBottom: '2px solid #ffd43b',
+        borderBottom: '2px solid #6b21a8',
         fontWeight: '600',
     },
     tabContent: {
@@ -93,31 +95,37 @@ const styles = {
 const ProductDetail = () => {
     const location = useLocation()
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     const { info } = location.state || {} // Retrieve passed data
 
     const tabs = ['Description', 'Reviews', 'Similar Products'];
-    const reviewsArr = [
-        {
-            id: 1,
-            profile: "pfp2.jpg",
-            username: "Rain Auston",
-            comment: "This tastes good"
-        },
-        {
-            id: 2,
-            profile: "pfp3.jpg",
-            username: "Miller Eddy",
-            comment: "I like this drink!"
-        },
-    ]
+
+    const formatDateISO = (date) => {
+        // Convert the date to ISO string
+        const isoString = date.toISOString();
+        // Split at the "T" character to get the date part
+        const formattedDate = isoString.split("T")[0];
+        return formattedDate;
+    };
+    
+    const currentDate = new Date();
+    const curDate = formatDateISO(currentDate); // Output: yyyy-mm-dd
 
     const [price, setPrice] = useState(info.price)
     const [quantity, setQuantity] = useState(1)
     const [activeTab, setActiveTab] = useState('Description')
-    const [reviews, setReviews] = useState(reviewsArr)
-    const [inputReview, setInputReview] = useState('')
+    const [reviews, setReviews] = useState([])
+    const [inputReview, setInputReview] = useState({
+        userId: 2,
+        productId: info.id,
+        reviewContent: "",
+        reviewDate: curDate
+    })
+    const [products, setProducts] = useState([])
+
+    const handleChange = (e) => {
+        setInputReview(prev => ({...prev, [e.target.name]: e.target.value}))
+    }
 
     const handleOption = (e) => {
         e.target.value.includes("XL") ? setPrice(info.price + 0.5) : setPrice(info.price)
@@ -131,14 +139,15 @@ const ProductDetail = () => {
         setQuantity(quantity + 1)
     }
 
-    const handleSubmitReview = (e) => {
-        e.preventDefault();
-        const newReview = {
-            username: "test5",
-            comment: inputReview
+    const handleSubmitReview = async (e) => {
+        e.preventDefault()
+
+        try {
+            await axios.post("http://localhost:8800/review", inputReview)
+            window.location.reload()
+        } catch (err) {
+            console.log(err)
         }
-        
-        setReviews(prevReviews => [...prevReviews, newReview])
     }
 
     const handleAddToCart = () => {
@@ -151,13 +160,57 @@ const ProductDetail = () => {
         }))
     }
 
-    const reviewCard = reviews.map(review => {
+    {/* Fetch all categories */}
+    useEffect(() => {
+        const fetchAllCategories = async () => {
+        try {
+            const res = await axios.get("http://localhost:8800/category");
+            setCategories(res.data);
+        } catch (err) {
+            console.log(err);
+        }
+        };
+
+        fetchAllCategories();
+    }, []);
+    
+    {/* Fetch all products */}
+    useEffect(() => {
+        const fetchAllProducts = async () => {
+        try {
+            const res = await axios.get("http://localhost:8800/product");
+            setProducts(res.data);
+        } catch (err) {
+            console.log(err);
+        }
+        };
+    
+        fetchAllProducts();
+    }, []);
+
+    {/* Fetch all reviews */}
+    useEffect(() => {
+        const fetchAllReviews = async () => {
+        try {
+            const res = await axios.get("http://localhost:8800/review");
+            setReviews(res.data);
+        } catch (err) {
+            console.log(err);
+        }
+        };
+    
+        fetchAllReviews();
+    }, []);
+
+    const totalReviews = reviews.filter(review => review.productId == info.id).length
+
+    const reviewCard = reviews.filter(review => review.productId == info.id).map(review => {
         return (
             <div key={review.id} className="flex gap-5 mb-5 px-5 py-2.5">
-                <img src={`./assets/${review.profile}`} alt="Profile" className="w-16 object-cover rounded-full" />
+                <img src={`./assets/pfp.jpg`} alt="Profile" className="w-16 object-cover rounded-full" />
                 <div className="flex-1 px-5 py-1 bg-gray-300 rounded-xl">
-                    <h4 className="text-lg font-bold">{review.username} <span className="text-sm font-normal ml-5">09/12</span></h4>
-                    <p>{review.comment}</p>
+                    <h4 className="text-lg font-bold">{review.username} <span className="text-sm font-normal ml-5">{review.reviewDate.split('T')[0]}</span></h4>
+                    <p>{review.reviewContent}</p>
                 </div>
             </div>
         )
@@ -167,15 +220,15 @@ const ProductDetail = () => {
         <>
             <Navbar isMenu={true} isContact={false} isAbout={false} />
             <div className="bg-white font-poppins">
-                <div className="mx-auto max-w-2xl px-4 py-20 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+                <div className="mx-auto max-w-2xl min-h-screen px-4 py-20 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                     <div className="text-lg mb-2">
                         <Link to="/products" className="hover:text-primary-bg transition-colors">Menu</Link> &gt; {info.category} &gt; <span className="font-semibold">{info.name}</span> 
                     </div>
                     <div className="flex flex-col justify-center">
                         <div className="flex gap-5">
                             {/* Product Image Section */}
-                            <div className="self-start w-96 object-cover rounded-xl shadow-xl">
-                                <img src={`./assets/${info.image}`} alt="Product"/>   
+                            <div className="flex justify-center self-start w-96 h-96 object-cover shadow-xl">
+                                <img src={`./assets/${info.image}`} alt="Product" className="rounded-xl"/>   
                             </div>
 
                             {/* Product Details Section */}
@@ -228,19 +281,28 @@ const ProductDetail = () => {
                         {activeTab === 'Reviews' && (
                         <div>
                             <div className="my-5 flex gap-5">
-                                <input type="text" placeholder="Submit a review here..." className="px-5" value={inputReview} onChange={e => setInputReview(e.target.value)} />
-                                <button className="bg-gray-300 py-2 px-5 rounded-lg" onClick={handleSubmitReview}>Submit</button>
+                                <input type="text" placeholder="Submit a review here..." className="px-5" name="reviewContent" onChange={handleChange} />
+                                <button className="bg-primary-bg text-white hover:opacity-80 transition-opacity py-2 px-5 rounded-lg" onClick={handleSubmitReview}>Submit</button>
                             </div>
 
-                            <h3 className="text-xl font-bold mb-2.5">{`${reviews.length} Reviews`}</h3>
+                            <h3 className="text-xl font-bold mb-2.5">{`${totalReviews} Review${totalReviews == 1 ? '' : 's'}`}</h3>
                             {reviewCard}
                         </div>
                         )}
 
                         {activeTab === 'Similar Products' && (
-                        <div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquid explicabo. Modi, quidem, ullam et!</p>
-                        </div>
+                            <div className="flex gap-x-6 overflow-x-scroll items-center">
+                                {products.map(product => (
+                                <div className="flex flex-col gap-y-2 bg-gray-200 p-3 rounded-xl">
+                                    <div className="">
+                                        <img src={`./assets/${product.productImage}`} alt="Product" className="min-w-52 object-cover rounded-xl cursor-pointer" />
+                                    </div>
+
+                                    <h3 className="font-bold text-xl">{product.productName}</h3>
+                                    <p>${product.productPrice}</p>
+                                </div>
+                                ))}
+                            </div>
                         )}
                     </div>
                 </div>

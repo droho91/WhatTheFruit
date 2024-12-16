@@ -13,7 +13,7 @@ const ShippingPage = () => {
     const navigate = useNavigate()
 
     const [orderInfo, setOrderInfo] = useState({
-        username: "test5",
+        username: "test2",
         email: "ndkhoi.gdsciu@gmail.com",
         phoneNumber: "0123 456 789",
         address: ""
@@ -88,11 +88,11 @@ const ShippingPage = () => {
                                     </div>
                                     <div className="flex items-center gap-3 mb-1">
                                         <img src="./assets/email.svg" alt="User" />
-                                        nguyenkhoi200455@gmail.com
+                                        ndkhoi.gdsciu@gmail.com
                                     </div>
                                     <div className="flex items-center gap-3 mb-1">
                                         <img src="./assets/phone.svg" alt="User" />
-                                        (+84) 767 009 955
+                                        (+84) 123 456 789
                                     </div>
                                 </div>
 

@@ -22,17 +22,18 @@ const UserProfile = () => {
     const activities = [
         {
             id: 1,
-            content: "Ordered Iced Cappuccino, Milk Coffee, +3",
+            content: "Ordered Apple, Peach, +3",
             date: "12/12/2024"
         },
         {
             id: 2,
-            content: "Ordered Milk Coffee",
+            content: "Ordered Grapes",
             date: "09/12/2024"
         },
     ]
 
     const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
 
     axios.defaults.withCredentials = true
   
@@ -41,6 +42,8 @@ const UserProfile = () => {
         .then(res => {
             if (res.data.status == "Successful") {
             setUsername(res.data.name)
+            setEmail(res.data.email)
+            console.log(res.data)
             } else {
             alert("Error!")
             }
@@ -51,10 +54,11 @@ const UserProfile = () => {
         <>
             <Navbar isMenu={false} isContact={false} isAbout={false} />
             <div className="bg-white font-poppins">
-                <div className="mx-auto max-w-2xl px-4 py-20 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+                <div className="mx-auto max-w-2xl min-h-screen px-4 py-20 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                     <div className="flex flex-col justify-center items-center gap-5 py-10">
                         <img src="./assets/pfp.jpg" alt="" className="w-52 h-52 object-cover rounded-full" />
                         <h1 className="text-3xl font-bold">{username}</h1>
+                        <h2 className="text-xl">ndkhoi.gdsciu@gmail.com</h2>
                         <a href="/edit-profile" className="px-5 py-3 border-solid border-2 border-primary-bg text-primary-text hover:bg-primary-bg hover:text-white transition-colors rounded-xl">Edit Profile</a>
                     </div>
 

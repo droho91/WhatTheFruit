@@ -73,11 +73,11 @@ const Products = () => {
     return (
       <div
         key={category.id}
-        className="bg-primary-bg w-40 p-3 text-white text-xl font-semibold text-center rounded-xl cursor-pointer"
+        className="bg-primary-bg min-w-40 p-3 text-white text-xl font-semibold text-center rounded-xl cursor-pointer"
         style={{...(activeTab === category.categoryName ? styles.activeTab : {})}}
         onClick={() => setActiveTab(category.categoryName)}
       >
-        <img src="./assets/drink.svg" alt="Category" />
+        <img src="./assets/fruits.png" alt="Category" className="mb-3" />
         {category.categoryName}
       </div>
     )
@@ -180,10 +180,10 @@ const Products = () => {
     <>
       <Navbar isMenu={true} isContact={false} isAbout={false} />
       <div className="bg-white font-poppins">
-        <div className="mx-auto max-w-2xl px-4 py-20 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">          
+        <div className="mx-auto max-w-2xl min-h-screen px-4 py-20 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">          
           {/* Category Tabs */}
           <h2 className="text-2xl font-bold tracking-tight text-primary-text mb-5">Categories</h2>
-          <div className="grid grid-cols-6 mb-10">
+          <div className="flex gap-x-6 mb-10 overflow-x-scroll">
             {categoryNav}
           </div>
 

@@ -132,10 +132,10 @@ const Home = () => {
           {/* Left Section */}
           <div className="md:w-1/2 text-center md:text-left">
             <h1 className="text-purple-800 text-6xl font-bold">
-              Drinks from the <span className="text-purple-500">Homeland</span>
+              Fruits from the <span className="text-purple-500">Homeland</span>
             </h1>
             <p className="text-gray-700 mt-4 text-lg">
-              Indulge in nature's finest with our premium selection of fresh drinks,
+              Indulge in nature's finest with our premium selection of fresh fruits,
               delivering exceptional taste and sweetness.
             </p>
             <button className="mt-6 bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-700">
@@ -146,7 +146,7 @@ const Home = () => {
           {/* Right Section */}
           <div className="md:w-1/2 mt-8 md:mt-0 relative">
             <img
-              src="./assets/home.png"
+              src="./assets/fruitsHome.png"
               alt="Coffee Cup"
               className="w-full rounded-lg"
             />
@@ -162,10 +162,10 @@ const Home = () => {
             {/* Left Section */}
             <div className="md:w-1/2 text-center md:text-left">
               <h3 className="text-purple-800 text-5xl font-bold">
-                Coffee
+                Berries
               </h3>
               <p className="text-gray-700 mt-4 text-lg">
-                A popular beverage made from roasted coffee beans, which are the seeds of the Coffea plant.
+                A type of fleshy fruit where the entire pericarp (fruit wall) is soft, and they usually contain multiple seeds.
               </p>
               <button className="mt-6 bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-700">
                 <a href="/products">Visit the Menu</a>
@@ -175,7 +175,7 @@ const Home = () => {
             {/* Right Section */}
             <div className="md:w-1/2 mt-8 md:mt-0 relative">
               <img
-                src='./assets/cappuccino.png'
+                src='./assets/berries.png'
                 alt="Coffee"
                 className="w-full rounded-lg"
               />
@@ -187,7 +187,7 @@ const Home = () => {
             {/* Left Section */}
             <div className="md:w-1/2 mt-8 md:mt-0 relative">
               <img
-                src='./assets/peach.png'
+                src='./assets/citrus.png'
                 alt="Tea"
                 className="w-full rounded-lg"
               />
@@ -196,10 +196,10 @@ const Home = () => {
             {/* Right Section */}
             <div className="md:w-1/2 text-center md:text-left">
               <h3 className="text-purple-800 text-5xl font-bold">
-                Tea
+                Citrus
               </h3>
               <p className="text-gray-700 mt-4 text-lg">
-              A widely consumed beverage made by steeping the leaves, buds, or stems of the Camellia sinensis plant in hot water.
+                A group of fruits that belong to the genus Citrus in the Rutaceae family. They are characterized by their thick, leathery rind (peel), segmented flesh, and a juicy, tangy-sweet flavor due to their high citric acid content.
               </p>
               <button className="mt-6 bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-700">
                 <a href="/products">Visit the Menu</a>
@@ -216,10 +216,10 @@ const Home = () => {
             {/* Left Section */}
             <div className="md:w-1/2 text-center md:text-left">
               <h3 className="text-purple-800 text-5xl font-bold">
-                Our House
+                Our Store
               </h3>
               <p className="text-gray-700 mt-4 text-lg">
-                A place full of drinks.
+                A place full of fruits.
               </p>
               <button className="mt-6 bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-700">
                 <a href="/products">Find Out</a>
@@ -229,7 +229,7 @@ const Home = () => {
             {/* Right Section */}
             <div className="md:w-1/2 mt-8 md:mt-0 relative">
               <img
-                src='./assets/coffeeShop.jpg'
+                src='./assets/aboutUs.jpg'
                 alt="Coffee"
                 className="w-full rounded-lg"
               />
