@@ -15,7 +15,7 @@ const Products = () => {
 
   const [search, setSearch] = useState('')
   const [categories, setCategories] = useState([])
-  const [activeTab, setActiveTab] = useState('Coffee')
+  const [activeTab, setActiveTab] = useState('Berries')
   const [products, setProducts] = useState([])
 
   const navigate = useNavigate();
