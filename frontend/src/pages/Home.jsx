@@ -1,64 +1,82 @@
-import React, { useState, useEffect } from 'react'
+// src/pages/Home.jsx
 
-import axios from 'axios'
-import Footer from '../components/Footer'
-
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Footer from '../components/Footer';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { motion } from 'framer-motion'; // Import Framer Motion
 
 const Home = () => {
   const navigations = [
     { name: 'Menu', href: '/products' },
     { name: 'Contact', href: '/contact' },
-    { name: 'About Us', href: '#' },
-  ]
+    { name: 'About Us', href: '/about' }, // Updated href
+  ];
 
   const [auth, setAuth] = useState(false);
-  const [username, setUsername] = useState('')
+  const [username, setUsername] = useState('');
 
-  axios.defaults.withCredentials = true
+  axios.defaults.withCredentials = true;
 
   useEffect(() => {
     axios.get("http://localhost:8800")
       .then(res => {
-
-      if (res.data.status == "Successful") {
-        setAuth(true)
-        setUsername(res.data.name)
-      } else {
-        setAuth(false)
-        alert("Error!")
-      }
-    })
-    .then(err => console.log(err))
-  }, [])
+        if (res.data.status === "Successful") {
+          setAuth(true);
+          setUsername(res.data.name);
+        } else {
+          setAuth(false);
+          // Optional: Provide more descriptive error messages
+          console.error("Authentication failed:", res.data.message);
+        }
+      })
+      .catch(err => console.log(err));
+  }, []);
 
   const handleLogOut = () => {
     axios.get("http://localhost:8800/logout")
-    .then(res => {
-      location.reload(true);
-    }).catch(err => console.log(err));
-  }
+      .then(res => {
+        location.reload(true);
+      }).catch(err => console.log(err));
+  };
+
+  // Animation Variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.3 
+      } 
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
+  };
 
   return (
-    <div className="font-poppins">
-      <header>
+    <div className="font-poppins relative bg-white overflow-x-hidden">
+      {/* Header */}
+      <header className="relative z-10">
         <nav className="flex items-center justify-between px-10 py-6 fixed top-0 left-0 right-0 bg-white shadow-sm z-10">
           {/* Logo */}
           <div className="flex flex-1">
             <a href="#" className="-m-1.5 p-1.5 flex items-center gap-3">
               <img
-                  alt=""
+                  alt="Fruit House Logo"
                   src="./assets/mangosteen.png"
                   className="h-8 w-auto"
               />
-              <p className="text-xl font-bold">61House</p>
+              <p className="text-xl font-bold text-purple-700">FRUIT HOUSE</p>
             </a>
           </div>
 
-          {/* Navigation Buttons */}
+          {/* Navigation */}
           <div className="flex gap-x-12">
             {navigations.map((item) => (
-              <a key={item.name} href={item.href} className="text-sm/6 font-semibold text-gray-900 hover:text-purple-400 transition-colors">
+              <a key={item.name} href={item.href} className="text-sm font-semibold text-gray-900 hover:text-purple-400 transition-colors">
                 {item.name}
               </a>
             ))}
@@ -66,29 +84,27 @@ const Home = () => {
 
           {/* Login Button */}
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            {auth ?
+            {auth ? (
               <div className="flex items-center justify-center gap-3">
-                <p className="text-lg font-medium">{username}</p>
+                <p className="text-lg font-medium text-gray-700">{username}</p>
                 <Menu as="div" className="relative ml-3">
                   <div>
-                    <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                      <span className="absolute -inset-1.5" />
+                    <MenuButton className="relative flex rounded-full bg-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-200">
                       <span className="sr-only">Open user menu</span>
                       <img
-                        alt=""
+                        alt="User Profile"
                         src="./assets/pfp.jpg"
-                        className="size-8 rounded-full"
+                        className="h-8 w-8 rounded-full"
                       />
                     </MenuButton>
                   </div>
                   <MenuItems
-                    transition
-                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none"
                   >
                     <MenuItem>
                       <a
                         href="/profile"
-                        className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50"
                       >
                         Your Profile
                       </a>
@@ -96,7 +112,7 @@ const Home = () => {
                     <MenuItem>
                       <div
                         onClick={handleLogOut}
-                        className="cursor-pointer px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                        className="cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-purple-50"
                       >
                         Log Out
                       </div>
@@ -104,11 +120,11 @@ const Home = () => {
                   </MenuItems>
                 </Menu>
               </div>
-            :
-              <a href="/login" className="text-sm/6 font-semibold text-gray-900">
+            ) : (
+              <a href="/login" className="text-sm font-semibold text-gray-900 hover:text-purple-500 transition">
                 Log in <span aria-hidden="true">&rarr;</span>
               </a>
-            }
+            )}
           </div>
         </nav>
       </header>
@@ -167,7 +183,7 @@ const Home = () => {
               <p className="text-gray-700 mt-4 text-lg">
                 A type of fleshy fruit where the entire pericarp (fruit wall) is soft, and they usually contain multiple seeds.
               </p>
-              <button className="mt-6 bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-700">
+              <button className="mt-6 bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-700 transition transform hover:scale-105">
                 <a href="/products">Visit the Menu</a>
               </button>
             </div>
@@ -201,11 +217,12 @@ const Home = () => {
               <p className="text-gray-700 mt-4 text-lg">
                 A group of fruits that belong to the genus Citrus in the Rutaceae family. They are characterized by their thick, leathery rind (peel), segmented flesh, and a juicy, tangy-sweet flavor due to their high citric acid content.
               </p>
-              <button className="mt-6 bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-700">
+              <button className="mt-6 bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-700 transition transform hover:scale-105">
                 <a href="/products">Visit the Menu</a>
               </button>
             </div>
           </section>
+        </div>
       </div>
 
       {/* About Section */}
@@ -234,12 +251,13 @@ const Home = () => {
                 className="w-full rounded-lg"
               />
             </div>
-          </section>
+          </div>
+        </section>
       </div>
 
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
