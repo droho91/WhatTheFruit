@@ -5,6 +5,12 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 
 const SignIn = () => {
+    const navigations = [
+        { name: 'Menu', href: '/products' },
+        { name: 'Contact', href: '/contact' },
+        { name: 'About Us', href: '#' },
+    ]
+
     const navigate = useNavigate()
 
     const [formValues, setFormValues] = useState({
@@ -39,11 +45,35 @@ const SignIn = () => {
 
     return (
         <div>
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+            <header>
+                <nav className="flex items-center px-10 py-6 fixed top-0 left-0 right-0 bg-white shadow-sm z-10">
+                    {/* Logo */}
+                    <div className="flex flex-1">
+                        <a href="/" className="-m-1.5 p-1.5 flex items-center gap-3">
+                            <img
+                                alt=""
+                                src="./assets/mangosteen.png"
+                                className="h-8 w-auto"
+                            />
+                            <p className="text-xl font-bold">61House</p>
+                        </a>
+                    </div>
+            
+                    {/* Navigation Buttons */}
+                    <div className="flex gap-x-12">
+                        {navigations.map((item) => (
+                            <a key={item.name} href={item.href} className="text-sm/6 font-semibold text-gray-900 hover:text-purple-400 transition-colors">
+                                {item.name}
+                            </a>
+                        ))}
+                    </div>
+                </nav>
+            </header>
+            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-32 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
                         alt="Your Company"
-                        src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+                        src="./assets/mangosteen.png"
                         className="mx-auto h-10 w-auto"
                     />
                     <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
@@ -111,11 +141,13 @@ const SignIn = () => {
                                 <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
                                 Password
                                 </label>
+                                {/*
                                 <div className="text-sm">
                                 <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
                                     Forgot password?
                                 </a>
                                 </div>
+                                */}
                             </div>
                             <div className="mt-2">
                                 <input
@@ -134,7 +166,7 @@ const SignIn = () => {
                             <div>
                             <button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="flex w-full justify-center rounded-md bg-primary-bg px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:opacity-80 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
                                 Sign in
                             </button>
@@ -143,7 +175,7 @@ const SignIn = () => {
 
                     <p className="mt-10 text-center text-sm/6 text-gray-500">
                         Already have an account?{' '}
-                        <a href="/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                        <a href="/login" className="font-semibold text-primary-text hover:text-primary-bg">
                         Log In
                         </a>
                     </p>

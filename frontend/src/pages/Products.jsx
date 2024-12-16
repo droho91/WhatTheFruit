@@ -1,109 +1,70 @@
-// src/pages/Products.jsx
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
+
 import axios from "axios";
-import { motion } from 'framer-motion';
-import { debounce } from 'lodash'; // Optional: For debouncing search input
 
 const Products = () => {
-  const [search, setSearch] = useState('');
-  const [categories, setCategories] = useState([]);
-  const [activeTab, setActiveTab] = useState('Coffee');
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState(null); // For error handling
+  const styles = {
+    activeTab: {
+      background: "#6b21a8"
+    }
+  };
+
+  const [search, setSearch] = useState('')
+  const [categories, setCategories] = useState([])
+  const [activeTab, setActiveTab] = useState('Berries')
+  const [products, setProducts] = useState([])
 
   const navigate = useNavigate();
 
   const handleClick = (info) => {
     // Navigate to ProductDetail with the element information
-    navigate("/productDetail", { state: { info } });
+    navigate("/productDetail", {state: { info }});
   };
 
-  // Animation Variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1, 
-      transition: { 
-        staggerChildren: 0.2,
-        duration: 0.5,
-      } 
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        type: 'spring',
-        stiffness: 100,
-        damping: 10,
-      },
-    },
-  };
-
-  const hoverVariants = {
-    hover: {
-      scale: 1.05,
-      boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
-      transition: {
-        duration: 0.3,
-        yoyo: Infinity,
-      },
-    },
-  };
-
-  // Fetch all categories
+  {/* Fetch all categories */}
   useEffect(() => {
     const fetchAllCategories = async () => {
       try {
         const res = await axios.get("http://localhost:8800/category");
         setCategories(res.data);
       } catch (err) {
-        console.error("Error fetching categories:", err);
-        setError("Failed to load categories. Please try again later.");
+        console.log(err);
       }
     };
+
     fetchAllCategories();
   }, []);
 
-  // Fetch all products
+  {/* Fetch all products */}
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
         const res = await axios.get("http://localhost:8800/product");
         setProducts(res.data);
       } catch (err) {
-        console.error("Error fetching products:", err);
-        setError("Failed to load products. Please try again later.");
+        console.log(err);
       }
     };
+  
     fetchAllProducts();
   }, []);
 
-  // Sort products by price initially (LowToHigh)
+  {/* Functions for Sort Products by Price */}
   useEffect(() => {
-    const sorted = [...products].sort((a, b) => a.productPrice - b.productPrice);
-    setProducts(sorted);
-  }, [products.length]); // Trigger when products are fetched
-
-  // Debounced Search Handler (Optional)
-  const handleSearch = debounce((value) => {
-    setSearch(value);
-  }, 300);
+    setProducts([...products.sort((a, b) => a.productPrice - b.productPrice)]);
+  }, [])
 
   function sortProductsByPrice(e) {
     e.stopPropagation();
-    const sortedProducts = [...products];
-    if (e.target.value === "LowToHigh") {
-      sortedProducts.sort((a, b) => a.productPrice - b.productPrice);
-    } else if (e.target.value === "HighToLow") {
-      sortedProducts.sort((a, b) => b.productPrice - a.productPrice);
+
+    if (e.target.value == "LowToHigh") {
+      setProducts([...products.sort((a, b) => a.productPrice - b.productPrice)]);
+    } else if (e.target.value == "HighToLow") {
+      setProducts([...products.sort((a, b) => b.productPrice - a.productPrice)]);
     }
   }
 
@@ -116,207 +77,113 @@ const Products = () => {
         style={{...(activeTab === category.categoryName ? styles.activeTab : {})}}
         onClick={() => setActiveTab(category.categoryName)}
       >
-        <img src="./assets/fruits.png" alt="Category" className="mb-3" />
+        <img src="./assets/fruits.png" alt="Category" />
         {category.categoryName}
       </div>
-  );
+    )
+  })
 
-  // Category Sections
-  const categorySection = categories.map(category => (
-    <div key={category.id} id={category.categoryName} className="mb-16">
-      {activeTab === category.categoryName && (
-        <motion.div initial="hidden" animate="visible" variants={containerVariants}>
-          <h2 className="mb-8 text-3xl font-bold tracking-tight text-gray-800 border-b border-gray-300 pb-2">
-            {category.categoryName} Menu
-          </h2>
-          
-          {/* Search and Sort */}
-          <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-            {/* Search Products */}
-            <motion.div className="relative w-full md:w-1/2 xl:w-1/3" variants={itemVariants}>
-              <input
-                type="search"
-                className="block w-full rounded-full border border-gray-300 px-5 py-2 text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400"
-                placeholder="Search products..."
-                onChange={(e) => handleSearch(e.target.value)}
-              />
-              <div className="absolute right-3 top-2.5 text-gray-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none" viewBox="0 0 24 24"
-                  strokeWidth="1.5" stroke="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round"
-                    d="M11.25 6.75a4.5 4.5 0 104.148 6.222.75.75 0 011.147-.664l3.6 3.6a.75.75 0 11-1.06 1.06l-3.6-3.6a.75.75 0 01-.664-1.147A4.5 4.5 0 0011.25 6.75z" />
-                </svg>
+  {/* Render all products in a category */}
+  const categorySection = categories.map(category => {
+    return (
+      <div key={category.id} id={category.categoryName} className="mb-5">
+        {activeTab === category.categoryName && (
+        <div>
+            <h2 className="mb-5 text-2xl font-bold tracking-tight text-primary-text border-b border-gray-300 pb-2">Menu</h2>
+            <div className="flex justify-between items-center">
+              {/* Search Products */}
+              <div>
+                <div className="xl:w-96">
+                  <div className="relative mb-4 flex w-full flex-wrap items-stretch">
+                    <input
+                        type="search"
+                        className="relative m-0 block flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+                        placeholder="Search"
+                        aria-label="Search"
+                        aria-describedby="button-addon2"
+                        onChange={(e) => setSearch(e.target.value)} />
+
+                    {/* <!--Search icon--> */}
+                    <span
+                        className="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200"
+                        id="basic-addon2">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            className="h-5 w-5">
+                            <path
+                                fillRule="evenodd"
+                                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                                clipRule="evenodd" />
+                        </svg>
+                    </span>
+                  </div>
+                </div>
               </div>
-            </motion.div>
 
-            {/* Sort Products by Price */}
-            <motion.div className="flex items-center text-gray-700 text-sm font-medium" variants={itemVariants}>
-              Sort by Price:
-              <select
-                className="mx-3 px-3 py-1 border border-gray-300 text-gray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-400"
-                name="price"
-                id="price"
-                onChange={sortProductsByPrice}
-              >
-                <option value="LowToHigh">Low to High</option>
-                <option value="HighToLow">High to Low</option>
-              </select>
-            </motion.div>
-          </div>
+              {/* Sort Products by Price */}
+              <div>
+                Sort Products by Price
+                <select className="mx-3 px-3 border-solid border-2 border-primary-bg text-primary-text rounded-xl" name="price" id="price" onChange={(e) => sortProductsByPrice(e)}>
+                  <option value="LowToHigh">Low to High</option>
+                  <option value="HighToLow">High to Low</option>
+                </select>
+              </div>
+            </div>
 
-          {/* Products Grid */}
-          <motion.div
-            className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
-            variants={containerVariants}
-          >
-            {products
-              .filter(product => {
-                return search.toLowerCase() === ''
-                  ? product
-                  : product.productName.toLowerCase().includes(search.toLowerCase());
-              })
-              .filter(product => product.categoryID === category.id)
-              .map(product => (
-                <motion.div
-                  key={product.id}
-                  className="group relative cursor-pointer"
-                  onClick={() => handleClick({
-                    id: product.id,
-                    category: category.categoryName,
-                    name: product.productName,
-                    desc: product.productDesc,
-                    price: product.productPrice,
-                    image: product.productImage
-                  })}
-                  variants={itemVariants}
-                  whileHover="hover"
-                >
-                  {/* Product Image */}
-                  <motion.div
-                    className="overflow-hidden rounded-lg shadow-lg"
-                    variants={hoverVariants}
-                  >
+            <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+              {products
+              .filter(product => { return search.toLowerCase() === '' ? product : product.productName.toLowerCase().includes(search)})
+              .filter(product => product.categoryID == category.id)
+              .map(product => {
+                return (
+                  <div key={product.id} className="group relative cursor-pointer" onClick={() => handleClick({id: product.id, category: category.categoryName, name: product.productName, desc: product.productDesc, price: product.productPrice, image: product.productImage})}>
+                    {/* Product Image */}
                     <img
-                      alt={`${product.productName} Image`}
-                      src={`/assets/${product.productImage}`} // Use absolute path
-                      className="h-72 w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      loading="lazy"
+                      alt="Hi"
+                      src={`./assets/${product.productImage}`}
+                      className="relative aspect-square w-full rounded-lg object-cover lg:aspect-auto lg:h-72 shadow-lg"
                     />
-                  </motion.div>
 
-                  {/* Best Selling Badge */}
-                  {product.bestSelling && 
-                    <motion.div
-                      className="absolute top-3 right-3 px-3 py-1 bg-purple-700 text-white text-sm rounded-full shadow-md"
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      Best Selling
-                    </motion.div>
-                  }
-
-                  {/* Product Info */}
-                  <motion.div
-                    className="mt-4 flex flex-col gap-1"
-                    variants={itemVariants}
-                  >
-                    <h3 className="text-lg font-semibold text-gray-800 group-hover:text-purple-500 transition-colors">
-                      {product.productName}
-                    </h3>
-                    <p className="text-gray-600">{`$${product.productPrice.toFixed(2)}`}</p>
-                  </motion.div>
-                </motion.div>
-              ))
-            }
-          </motion.div>
-        </motion.div>
-      )}
-    </div>
-  ));
+                    {/* Best Selling */}
+                    {product.bestSelling ? 
+                      <div className="absolute top-3 right-3 px-3 bg-primary-bg text-white rounded-xl">
+                        Best Selling
+                      </div>
+                      : 
+                      <div></div>
+                    }
+            
+                    {/* Product Name & Price */}
+                    <div className="mt-4 flex flex-col gap-1">
+                      <h3 className="text-lg font-medium hover:text-yellow-500 transition-colors">
+                        <a>
+                          <span aria-hidden="true" className="absolute inset-0" />
+                          {product.productName}
+                          
+                        </a>
+                      </h3>
+                      <p className="text-gray-600">{`$${product.productPrice}`}</p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  })
 
   return (
     <>
-      {/* Navbar */}
       <Navbar isMenu={true} isContact={false} isAbout={false} />
-
-      {/* Hero / Banner */}
-      <div
-        className="relative bg-gradient-to-tr from-purple-100 via-pink-50 to-white py-20 px-8 md:px-16 overflow-hidden"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        {/* Decorative Background Shapes */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -inset-x-1/2 -top-40 h-[50rem] w-[100rem] rotate-[30deg] bg-gradient-to-tr from-purple-200 to-pink-200 opacity-30 blur-3xl"></div>
-        </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="md:w-1/2 space-y-5">
-            <h1
-              className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              Explore Our Finest Selection of Drinks
-            </h1>
-            <p
-              className="text-gray-700 text-lg"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              Discover unique flavors, best sellers, and new arrivals at unbeatable prices. Enjoy a world of taste at your fingertips.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-6 md:gap-8">
-            {/* Search Icon */}
-            <button
-              className="flex items-center justify-center h-12 w-12 rounded-full border border-gray-300 hover:border-purple-400 hover:text-purple-600 transition-colors"
-              aria-label="Search Products"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg"
-                className="w-6 h-6 text-gray-600"
-                fill="none" viewBox="0 0 24 24"
-                strokeWidth={1.5} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round"
-                  d="M11.25 6.75a4.5 4.5 0 104.148 6.222.75.75 0 011.147-.664l3.6 3.6a.75.75 0 11-1.06 1.06l-3.6-3.6a.75.75 0 01-.664-1.147A4.5 4.5 0 0011.25 6.75z" />
-              </svg>
-            </button>
-            {/* Cart Icon */}
-            <button
-              className="flex items-center justify-center h-12 w-12 rounded-full border border-gray-300 hover:border-purple-400 hover:text-purple-600 transition-colors relative"
-              aria-label="View Cart"
-              onClick={() => navigate("/checkout")}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <img src="/assets/cart.png" alt="Cart" className='w-6 h-6' /> {/* Use absolute path */}
-              {products.reduce((acc, product) => acc + product.quantity, 0) > 0 && (
-                <span className='absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex justify-center items-center'>
-                  {products.reduce((acc, product) => acc + product.quantity, 0)}
-                </span>
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content */}
       <div className="bg-white font-poppins">
         <div className="mx-auto max-w-2xl min-h-screen px-4 py-20 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">          
           {/* Category Tabs */}
           <h2 className="text-2xl font-bold tracking-tight text-primary-text mb-5">Categories</h2>
-          <div className="flex gap-x-6 mb-10 overflow-x-scroll">
+          <div className="flex gap-x-6 overflow-x-scroll mb-10">
             {categoryNav}
           </div>
 
@@ -325,10 +192,9 @@ const Products = () => {
         </div>
       </div>
 
-      {/* Footer */}
       <Footer />
     </>
   )
 }
 
-export default Products;
+export default Products

@@ -222,7 +222,6 @@ const Home = () => {
               </button>
             </div>
           </section>
-        </div>
       </div>
 
       {/* About Section */}
@@ -251,9 +250,8 @@ const Home = () => {
                 className="w-full rounded-lg"
               />
             </div>
-          </div>
-        </section>
-      </div>
+          </section>
+        </div>
 
       <Footer />
     </div>

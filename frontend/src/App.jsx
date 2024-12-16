@@ -10,14 +10,13 @@ import SignIn from './pages/SignIn'
 import LogIn from './pages/LogIn'
 import UserProfile from "./pages/UserProfile"
 import EditProfile from "./pages/EditProfile"
-
 import AdminHome from "./pages/AdminHome"
 import AdminProducts from "./pages/AdminProducts"
 import AdminUpdate from "./pages/AdminUpdate"
+import AboutUs from './pages/AboutUs'
 
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'; // Import default CSS for toastify
-import AboutUs from "./pages/AboutUs"
 
 function App() {
   return (
@@ -32,12 +31,12 @@ function App() {
         <Route path="/shipping" element={<Shipping />} />
         <Route path="/successful" element={<Successful />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<AboutUs />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/admin-products" element={<AdminProducts />} />
         <Route path="/admin-update/:id" element={<AdminUpdate />} />
-        <Route path="/about" element={<AboutUs />} />
       </Routes>
       <ToastContainer 
           position="top-center" 
