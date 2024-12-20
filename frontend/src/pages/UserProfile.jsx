@@ -34,6 +34,7 @@ const UserProfile = () => {
 
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
 
     axios.defaults.withCredentials = true
   
@@ -41,11 +42,11 @@ const UserProfile = () => {
         axios.get("http://localhost:8800")
         .then(res => {
             if (res.data.status == "Successful") {
-            setUsername(res.data.name)
-            setEmail(res.data.email)
-            console.log(res.data)
+                setUsername(res.data.name)
+                setEmail(res.data.email)
+                setPhoneNumber(res.data.phone)
             } else {
-            alert("Error!")
+                alert("Error!")
             }
         }).then(err => console.log(err))
     }, [])
@@ -58,7 +59,7 @@ const UserProfile = () => {
                     <div className="flex flex-col justify-center items-center gap-5 py-10">
                         <img src="./assets/pfp.jpg" alt="" className="w-52 h-52 object-cover rounded-full" />
                         <h1 className="text-3xl font-bold">{username}</h1>
-                        <h2 className="text-xl">ndkhoi.gdsciu@gmail.com</h2>
+                        <h2 className="text-xl">{email}</h2>
                         <a href="/edit-profile" className="px-5 py-3 border-solid border-2 border-primary-bg text-primary-text hover:bg-primary-bg hover:text-white transition-colors rounded-xl">Edit Profile</a>
                     </div>
 
@@ -69,6 +70,13 @@ const UserProfile = () => {
                                 <h2 className="text-xl font-bold">Bio</h2>
                                 <p className="text-gray-700 mt-4 text-lg">
                                 No bio set.
+                                </p>
+                            </div>
+
+                            <div className="rounded-xl shadow-lg px-5 py-3">
+                                <h2 className="text-xl font-bold">Contact</h2>
+                                <p className="text-gray-700 mt-4 text-lg">
+                                {phoneNumber}
                                 </p>
                             </div>
                             

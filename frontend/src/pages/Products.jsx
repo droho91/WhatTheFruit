@@ -73,11 +73,11 @@ const Products = () => {
     return (
       <div
         key={category.id}
-        className="bg-primary-bg min-w-40 p-3 text-white text-xl font-semibold text-center rounded-xl cursor-pointer"
+        className="flex items-center gap-x-4 bg-primary-bg min-w-40 p-3 text-white text-xl font-semibold text-center rounded-xl cursor-pointer"
         style={{...(activeTab === category.categoryName ? styles.activeTab : {})}}
         onClick={() => setActiveTab(category.categoryName)}
       >
-        <img src="./assets/fruits.png" alt="Category" />
+        <img src="./assets/fruits.png" alt="Category" className="w-10" />
         {category.categoryName}
       </div>
     )

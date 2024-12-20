@@ -1,5 +1,5 @@
 // ShippingPage.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -12,12 +12,31 @@ const ShippingPage = () => {
     const cart = useSelector((state) => state.cart)
     const navigate = useNavigate()
 
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
+
     const [orderInfo, setOrderInfo] = useState({
-        username: "test2",
-        email: "ndkhoi.gdsciu@gmail.com",
-        phoneNumber: "0123 456 789",
+        username: username,
+        email: email,
+        phoneNumber: phoneNumber,
         address: ""
     })
+
+    axios.defaults.withCredentials = true
+  
+    useEffect(() => {
+        axios.get("http://localhost:8800")
+        .then(res => {
+            if (res.data.status == "Successful") {
+                setUsername(res.data.name)
+                setEmail(res.data.email)
+                setPhoneNumber(res.data.phone)
+            } else {
+                alert("Error!")
+            }
+        }).then(err => console.log(err))
+    }, [])
 
     const handleChange = (e) => {
         setOrderInfo(prev => ({...prev, [e.target.name]: e.target.value}))
@@ -84,15 +103,15 @@ const ShippingPage = () => {
                                 <div className="my-5">
                                     <div className="flex items-center gap-3 mb-1">
                                         <img src="./assets/user.svg" alt="User" />
-                                        Đăng Khôi
+                                        {username}
                                     </div>
                                     <div className="flex items-center gap-3 mb-1">
                                         <img src="./assets/email.svg" alt="User" />
-                                        ndkhoi.gdsciu@gmail.com
+                                        {email}
                                     </div>
                                     <div className="flex items-center gap-3 mb-1">
                                         <img src="./assets/phone.svg" alt="User" />
-                                        (+84) 123 456 789
+                                        {phoneNumber}
                                     </div>
                                 </div>
 

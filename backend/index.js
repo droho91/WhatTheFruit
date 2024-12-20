@@ -84,8 +84,8 @@ app.post("/login", (req, res) => {
             bcrypt.compare(req.body.password.toString(), data[0].password, (err, response) => {
                 if (err) return res.send(`Error Message: ${err}`);
                 if (response) {
-                    const username = data[0].username;
-                    const token = jwt.sign({username}, "jwt-secret-key", {expiresIn: '1d'});
+                    const {id, username, email, phoneNumber} = data[0]
+                    const token = jwt.sign({id, username, email, phoneNumber}, "jwt-secret-key", {expiresIn: '1d'});
                     res.cookie('token', token);
                     return res.json({status: "Successful"});
                 } else {
@@ -107,7 +107,10 @@ const verifyUser = (req, res, next) => {
             if (err) {
                 return res.json(`Error Message: ${err}`)
             } else {
+                req.id = decoded.id;
                 req.username = decoded.username;
+                req.email = decoded.email;
+                req.phoneNumber = decoded.phoneNumber;
                 next();
             }
         })
@@ -115,7 +118,7 @@ const verifyUser = (req, res, next) => {
 }
 
 app.get("/", verifyUser, (req, res) => {
-    return res.json({status: "Successful", name: req.username}); 
+    return res.json({status: "Successful", id: req.id, name: req.username, email: req.email, phone: req.phoneNumber}); 
 })
 
 app.get("/logout", (req, res) => {
