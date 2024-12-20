@@ -26,7 +26,7 @@ app.use(cookieParser())
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Koiespretion2004!",
+    password: "my-secret-pw",
     database: "fsm"
 })
 

@@ -10,13 +10,13 @@ const UserProfile = () => {
         {
             id: 1,
             image: "facebook.png",
-            username: "Đăng Khôi"
+            username: "Phúc Nguyễn"   
         },
         {
             id: 2,
             image: "spotify.png",
-            username: "Đăng Khôi"
-        },
+            username: "Ian Nguyễn"
+        }
     ]
 
     const activities = [
