@@ -20,12 +20,12 @@ const Contact = () => {
                     </Typography>
                     <Typography
                     variant="h1"
-                    color="blue-gray"
+                    color="teal"
                     className="mb-4 !text-3xl lg:!text-5xl"
                     >
                     We&apos;re Here to Help
                     </Typography>
-                    <Typography className="mb-10 font-normal !text-lg lg:mb-20 mx-auto max-w-3xl !text-gray-500">
+                    <Typography className="mb-10 font-normal !text-lg lg:mb-20 mx-auto max-w-3xl !text-teal-500">
                     Whether it&apos;s a question about our services, a request for
                     technical assistance, or suggestions for improvement, our team is
                     eager to hear from you.
@@ -42,7 +42,7 @@ const Contact = () => {
                     >
                         <Typography
                         variant="small"
-                        className="text-left !font-semibold !text-gray-600"
+                        className="text-left !font-semibold !text-teal-600"
                         >
                         Select Options for Business Engagement
                         </Typography>
@@ -58,7 +58,7 @@ const Contact = () => {
                         <div>
                             <Typography
                             variant="small"
-                            className="mb-2 text-left font-medium !text-gray-900"
+                            className="mb-2 text-left font-medium !text-teal-900"
                             >
                             First Name
                             </Typography>
@@ -67,7 +67,7 @@ const Contact = () => {
                             size="lg"
                             placeholder="First Name"
                             name="first-name"
-                            className="focus:border-t-gray-900"
+                            className="focus:border-t-teal-900"
                             containerProps={{
                                 className: "!min-w-full",
                             }}
@@ -79,7 +79,7 @@ const Contact = () => {
                         <div>
                             <Typography
                             variant="small"
-                            className="mb-2 text-left font-medium !text-gray-900"
+                            className="mb-2 text-left font-medium !text-teal-900"
                             >
                             Last Name
                             </Typography>
@@ -88,7 +88,7 @@ const Contact = () => {
                             size="lg"
                             placeholder="Last Name"
                             name="last-name"
-                            className="focus:border-t-gray-900"
+                            className="focus:border-t-teal-900"
                             containerProps={{
                                 className: "!min-w-full",
                             }}
@@ -101,7 +101,7 @@ const Contact = () => {
                         <div>
                         <Typography
                             variant="small"
-                            className="mb-2 text-left font-medium !text-gray-900"
+                            className="mb-2 text-left font-medium !text-teal-900"
                         >
                             Your Email
                         </Typography>
@@ -110,7 +110,7 @@ const Contact = () => {
                             size="lg"
                             placeholder="name@email.com"
                             name="email"
-                            className="focus:border-t-gray-900"
+                            className="focus:border-t-teal-900"
                             containerProps={{
                             className: "!min-w-full",
                             }}
@@ -122,7 +122,7 @@ const Contact = () => {
                         <div>
                         <Typography
                             variant="small"
-                            className="mb-2 text-left font-medium !text-gray-900"
+                            className="mb-2 text-left font-medium !text-teal-900"
                         >
                             Your Message
                         </Typography>
@@ -131,7 +131,7 @@ const Contact = () => {
                             color="gray"
                             placeholder="Message"
                             name="message"
-                            className="focus:border-t-gray-900"
+                            className="focus:border-t-teal-900"
                             containerProps={{
                             className: "!min-w-full",
                             }}
@@ -140,7 +140,7 @@ const Contact = () => {
                             }}
                         />
                         </div>
-                        <Button className="w-full" color="gray">
+                        <Button className="w-full" color="teal">
                         Send message
                         </Button>
                     </form>

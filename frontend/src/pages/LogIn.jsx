@@ -83,17 +83,17 @@ const LogIn = () => {
                         <a href="/" className="-m-1.5 p-1.5 flex items-center gap-3">
                             <img
                                 alt=""
-                                src="./assets/mangosteen.png"
-                                className="h-8 w-auto"
+                                src="./assets/fruitlogo.jpg"
+                                className="h-20 w-auto"
                             />
-                            <p className="text-xl font-bold">61House</p>
+                            <p className="text-xl font-bold">WhatTheFruit</p>
                         </a>
                     </div>
             
                     {/* Navigation Buttons */}
                     <div className="flex gap-x-12">
                         {navigations.map((item) => (
-                            <a key={item.name} href={item.href} className="text-sm/6 font-semibold text-gray-900 hover:text-purple-400 transition-colors">
+                            <a key={item.name} href={item.href} className="text-sm/6 font-semibold text-gray-900 hover:text-green-400 transition-colors">
                                 {item.name}
                             </a>
                         ))}
@@ -104,10 +104,10 @@ const LogIn = () => {
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
                         alt="Your Company"
-                        src="./assets/mangosteen.png"
-                        className="mx-auto h-10 w-auto"
+                        src="./assets/fruitlogo.jpg"
+                        className="mx-auto h-25 w-auto"
                     />
-                    <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+                    <h2 className="mt-3 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
                         Log in to your account
                     </h2>
                 </div>
@@ -127,7 +127,7 @@ const LogIn = () => {
                                 onChange={handleInputChange}
                                 required
                                 autoComplete="email"
-                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 sm:text-sm/6"
                                 />
                             </div>
                         </div>
@@ -152,7 +152,7 @@ const LogIn = () => {
                                 onChange={handleInputChange}
                                 required
                                 autoComplete="current-password"
-                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 sm:text-sm/6"
                                 />
                             </div>
                         </div>
@@ -160,7 +160,7 @@ const LogIn = () => {
                         <div>
                             <button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-primary-bg px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:opacity-80 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="flex w-full justify-center rounded-md bg-primary-bg px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:opacity-80 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
                             >
                                 Log in
                             </button>

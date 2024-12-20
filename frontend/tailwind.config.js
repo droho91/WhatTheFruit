@@ -7,11 +7,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        "poppins": "Poppins"
+        "custom": ["Roboto", "sans-serif"],
       },
       colors: {
-        "primary-text": "#6b21a8",
-        "primary-bg": "#a855f7"
+        "primary-text": "#10B981",
+        "primary-bg": "#10B981",
       }
     },
   },

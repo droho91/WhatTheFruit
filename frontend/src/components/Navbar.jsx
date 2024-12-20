@@ -50,7 +50,7 @@ const Navbar = (props) => {
                     <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                         <div className="flex shrink-0 items-center">
                             <a href="/">
-                                <img src="./assets/mangosteen.png" alt="Logo" className="h-8 w-auto"/>
+                            <img src="./assets/fruitlogo.jpg" alt="Logo" className="h-12 w-auto" />
                             </a>
                         </div>
                         <div className="hidden sm:ml-6 sm:block">
@@ -74,7 +74,7 @@ const Navbar = (props) => {
                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                         {/* cart */}
                         <div className='w-10 h-10 mx-6 bg-gray-100 rounded-full flex justify-center items-center relative cursor-pointer'>
-                            <img src="./assets/cart.png" alt="" className='w-6 hover:opacity-50 transition-colors' onClick={handleNavigate}/>
+                            <img src="./assets/basket.jpg" alt="" className='w-6 hover:opacity-50 transition-colors' onClick={handleNavigate}/>
                             <span className='absolute top-2/3 right-1/2 bg-red-500 text-white text-sm
                             w-5 h-5 rounded-full flex justify-center items-center'>{totalQuantity}</span>
                         </div>

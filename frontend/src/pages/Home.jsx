@@ -66,17 +66,17 @@ const Home = () => {
             <a href="#" className="-m-1.5 p-1.5 flex items-center gap-3">
               <img
                   alt="Fruit House Logo"
-                  src="./assets/mangosteen.png"
-                  className="h-8 w-auto"
+                  src="./assets/fruitlogo.jpg"
+                   className="h-20 w-auto"
               />
-              <p className="text-xl font-bold text-purple-700">FruitHouse</p>
+              <p className="text-xl font-bold text-teal-700">WhatTheFruit</p>
             </a>
           </div>
 
           {/* Navigation */}
           <div className="flex gap-x-12">
             {navigations.map((item) => (
-              <a key={item.name} href={item.href} className="text-sm font-semibold text-gray-900 hover:text-purple-400 transition-colors">
+              <a key={item.name} href={item.href} className="text-sm font-semibold text-gray-900 hover:text-green-400 transition-colors">
                 {item.name}
               </a>
             ))}
@@ -121,7 +121,7 @@ const Home = () => {
                 </Menu>
               </div>
             ) : (
-              <a href="/login" className="text-sm font-semibold text-gray-900 hover:text-purple-500 transition">
+              <a href="/login" className="text-sm font-semibold text-gray-900 hover:text-teal-500 transition">
                 Log in <span aria-hidden="true">&rarr;</span>
               </a>
             )}
@@ -147,24 +147,23 @@ const Home = () => {
         <section className="flex flex-col md:flex-row items-center justify-between px-8">
           {/* Left Section */}
           <div className="md:w-1/2 text-center md:text-left">
-            <h1 className="text-purple-800 text-6xl font-bold">
-              Fruits from the <span className="text-purple-500">Homeland</span>
+            <h1 className="text-teal-700 text-6xl font-bold">
+            Fresh fruit <span className="text-teal-400"><div>Delivered to Your Doorstep </div></span>
             </h1>
             <p className="text-gray-700 mt-4 text-lg">
-              Indulge in nature's finest with our premium selection of fresh fruits,
-              delivering exceptional taste and sweetness.
+            Experience the joy of fresh, handpicked fruits straight from the farm to your home. Explore our wide selection of seasonal and exotic fruits, perfect for every occasion.
             </p>
-            <button className="mt-6 bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-700">
+            <button className="mt-6 bg-green-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-teal-700">
               <a href="/products">Visit the Menu</a>
             </button>
           </div>
 
           {/* Right Section */}
-          <div className="md:w-1/2 mt-8 md:mt-0 relative">
+          <div className="md:w-1/2 mt-0 md:mt-8 relative">
             <img
-              src="./assets/fruitsHome.png"
+              src="./assets/fruitlogo.jpg"
               alt="Coffee Cup"
-              className="w-full rounded-lg"
+              className="w-auto rounded-auto"
             />
           </div>
         </section>
@@ -172,26 +171,26 @@ const Home = () => {
 
       {/* Categories Section */}
       <div className="mx-auto max-w-7xl px-8">
-        <h2 className="text-purple-800 text-5xl font-bold m-auto text-center">Visit the Categories</h2>
+        <h2 className="text-teal-800 text-5xl font-bold m-auto text-center">Visit the Categories</h2>
           {/* Coffee */}
           <section className="flex flex-col md:flex-row items-center justify-between px-8">
             {/* Left Section */}
             <div className="md:w-1/2 text-center md:text-left">
-              <h3 className="text-purple-800 text-5xl font-bold">
+              <h3 className="text-teal-700 text-5xl font-bold">
                 Berries
               </h3>
               <p className="text-gray-700 mt-4 text-lg">
-                A type of fleshy fruit where the entire pericarp (fruit wall) is soft, and they usually contain multiple seeds.
+              We partner with local farmers to bring you the freshest fruits. Shop now and enjoy the taste of nature delivered fresh to your home.
               </p>
-              <button className="mt-6 bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-700 transition transform hover:scale-105">
+              <button className="mt-6 bg-green-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-teal-700 transition transform hover:scale-105">
                 <a href="/products">Visit the Menu</a>
               </button>
             </div>
 
             {/* Right Section */}
-            <div className="md:w-1/2 mt-8 md:mt-0 relative">
+            <div className="md:w-1/2 mt-8 md:mt-2 relative">
               <img
-                src='./assets/berries.png'
+                src='./assets/berry1.jpg'
                 alt="Coffee"
                 className="w-full rounded-lg"
               />
@@ -201,23 +200,23 @@ const Home = () => {
           {/* Tea */}
           <section className="flex flex-col md:flex-row items-center justify-between px-8">
             {/* Left Section */}
-            <div className="md:w-1/2 mt-8 md:mt-0 relative">
+            <div className="md:w-1/2 mt-8 md:mt-0 relative -pl-4">
               <img
-                src='./assets/citrus.png'
+                src='./assets/citrus1.jpg'
                 alt="Tea"
-                className="w-full rounded-lg"
+                  className="w-full rounded-lg -ml-4"
               />
             </div>
 
             {/* Right Section */}
             <div className="md:w-1/2 text-center md:text-left">
-              <h3 className="text-purple-800 text-5xl font-bold">
+              <h3 className="text-teal-700 text-5xl font-bold">
                 Citrus
               </h3>
               <p className="text-gray-700 mt-4 text-lg">
-                A group of fruits that belong to the genus Citrus in the Rutaceae family. They are characterized by their thick, leathery rind (peel), segmented flesh, and a juicy, tangy-sweet flavor due to their high citric acid content.
+              Savor the taste of nature with our premium fruits. Packed with flavor and nutrition, we bring you the best fruits at unbeatable prices.
               </p>
-              <button className="mt-6 bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-700 transition transform hover:scale-105">
+              <button className="mt-6 bg-green-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-teal-700 transition transform hover:scale-105">
                 <a href="/products">Visit the Menu</a>
               </button>
             </div>
@@ -226,18 +225,18 @@ const Home = () => {
 
       {/* About Section */}
       <div className="mx-auto max-w-7xl px-8 py-10">
-        <h2 className="text-purple-800 text-5xl font-bold m-auto text-center">About Us</h2>
+        <h2 className="text-teal-800 text-5xl font-bold m-auto text-center">About Us</h2>
           {/* Coffee */}
           <section className="flex flex-col md:flex-row items-center justify-between px-8 py-14">
             {/* Left Section */}
             <div className="md:w-1/2 text-center md:text-left">
-              <h3 className="text-purple-800 text-5xl font-bold">
+              <h3 className="text-teal-700 text-5xl font-bold">
                 Our Store
               </h3>
               <p className="text-gray-700 mt-4 text-lg">
-                A place full of fruits.
+              From juicy apples to tropical mangoes, shop your favorite fruits online with ease. Quality guaranteed, freshness delivered.
               </p>
-              <button className="mt-6 bg-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-700">
+              <button className="mt-6 bg-green-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-teal-700">
                 <a href="/products">Find Out</a>
               </button>
             </div>
@@ -245,7 +244,7 @@ const Home = () => {
             {/* Right Section */}
             <div className="md:w-1/2 mt-8 md:mt-0 relative">
               <img
-                src='./assets/aboutUs.jpg'
+                src='./assets/home1.webp'
                 alt="Coffee"
                 className="w-full rounded-lg"
               />
